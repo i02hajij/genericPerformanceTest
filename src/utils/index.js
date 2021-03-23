@@ -237,6 +237,31 @@ const generarEsqueletosReturns = (params) => {
   // array con los esqueletos generados
   const esqueletos = [];
 
+  for (let i = 0; i < params.bloques.length; i++) {
+    const returnJSON = {};
+    returnJSON.warehouseCode = 356;
+    returnJSON.returnDate = moment()
+    .hour(8)
+    .minute(0)
+    .second(0)
+    .format('YYYY-MM-DDTHH:mm:ss[Z]');
+    returnJSON.returnType = '1';
+    const returnLines = [];
+    for (let j = 1; j <= params.bloques[i]; j++) {
+      const returnLine = {};
+      returnLine.itemCode = j;
+      returnLine.itemTreatmentType = '2';
+      returnLine.unitsQuantity = 100;
+      returnLine.returnCauseCode = 1;
+      returnLine.retailPrice = 50.2;
+      returnLine.decreasePercent = 0.5;
+      returnLine.decreaseWeight = 5;
+      returnLines.push(returnLine);
+    }
+    returnJSON.returnItems = returnLines;
+    esqueletos.push(returnJSON);
+  }
+
   return esqueletos;
 };
 
@@ -354,13 +379,16 @@ const enviarDatos = async (data, i, j, params, id) => {
       const totalServicio = new Date(end - start).getTime();
       const mensaje =
         'Mensaje ' +
-        (j+1) +
+        (j + 1) +
         ' de ' +
         params.iteraciones +
         ' - statusCode: ' +
         res.status +
-        ' - ' + id +
-        ' - Tiempo: ' + totalServicio + ' ms';
+        ' - ' +
+        id +
+        ' - Tiempo: ' +
+        totalServicio +
+        ' ms';
       console.log(mensaje);
       total = totalServicio;
     })

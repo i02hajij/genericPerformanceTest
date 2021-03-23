@@ -41,7 +41,7 @@ const parametrosDefecto = {
 
 const urls = [
   'https://supply-orders-data-es.test.store.dgrp.io/orders-data',
-  'http:',
+  'https://warehouse-returns-data-es.dev.store.dgrp.io/v2/warehouse-returns/stores/{t}/returns',
   'https://stock-selfconsumption-event-es.test.store.dgrp.io/v1/self-consumptions/stores/{t}',
 ];
 
