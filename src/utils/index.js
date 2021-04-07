@@ -111,8 +111,10 @@ const validarParametros = (argv) => {
     } else {
       params.entidad = entidad;
       params.url = urls[entidad];
+      console.log(entidad);
       // en caso de ser autoconsumo, hay que añadir la tienda a la url
-      if (entidad == 2) {
+      if (entidad == 2  || entidad == 1) {
+        console.log('entidad = ' + entidad);
         params.url = params.url.replace('{t}', params.tienda);
       }
       params.headers = cabeceras;
@@ -241,21 +243,21 @@ const generarEsqueletosReturns = (params) => {
     const returnJSON = {};
     returnJSON.warehouseCode = 356;
     returnJSON.returnDate = moment()
-    .hour(8)
-    .minute(0)
-    .second(0)
-    .format('YYYY-MM-DDTHH:mm:ss[Z]');
+      .hour(8)
+      .minute(0)
+      .second(0)
+      .format('YYYY-MM-DDTHH:mm:ss[Z]');
     returnJSON.returnType = '1';
     const returnLines = [];
     for (let j = 1; j <= params.bloques[i]; j++) {
       const returnLine = {};
       returnLine.itemCode = j;
-      returnLine.itemTreatmentType = '2';
+      returnLine.itemTreatmentType = '1';
       returnLine.unitsQuantity = 100;
       returnLine.returnCauseCode = 1;
       returnLine.retailPrice = 50.2;
-      returnLine.decreasePercent = 0.5;
-      returnLine.decreaseWeight = 5;
+      //returnLine.decreasePercent = 0.5;
+      //returnLine.decreaseWeight = 5;
       returnLines.push(returnLine);
     }
     returnJSON.returnItems = returnLines;
@@ -336,6 +338,8 @@ const performanceTest = async (esqueletos, params, id) => {
           id = datos.orderProposalCode;
           break;
         case 1:
+          datos.movementId = uuidv4();
+          id = datos.movementId;
           break;
         case 2:
           datos.movementId = uuidv4();
